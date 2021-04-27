@@ -5,7 +5,7 @@ const Header = ({ pseudo }) => {
 
   return (
     <header>
-      <h1>La boite à recette de {formatPseudo(pseudo)}</h1>
+      <h1>La boite à recette {formatPseudo(pseudo)}</h1>
     </header>
   );
 };
