@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 // CSS
 import './App.css'
+import Admin from './components/Admin'
 import Header from './components/Header'
+import recettes from './recettes'
 
 class App extends Component {
   state = {
-    pseudo: this.props.match.params.pseudo
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  chargerExemple = () => {
+    this.setState({ recettes })
   }
 
   render() {
@@ -18,6 +25,8 @@ class App extends Component {
             <h2>Une Carte</h2>
           </div>
         </div>
+
+        <Admin chargerExemple={this.chargerExemple} />
       </div>
     )
   }
