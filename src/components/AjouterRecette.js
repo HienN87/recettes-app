@@ -13,10 +13,21 @@ class AjouterRecette extends Component {
     this.setState({ [name]: value })
   }
 
+  handleSubmit = event => {
+    event.preventDefault()
+    const recette = { ...this.state }
+    this.props.ajouterRecette(recette)
+    // Reset
+    Object.keys(recette).forEach(item => {
+      recette[item] = ''
+    })
+    this.setState({ ...recette })
+  }
+
   render() {
     return (
       <div className="card">
-        <form className="admin-form ajouter-recette">
+        <form className="admin-form ajouter-recette" onSubmit={this.handleSubmit}>
           <input value={this.state.nom}
             onChange={this.handleChange}
             name="nom" type="text"
@@ -39,6 +50,8 @@ class AjouterRecette extends Component {
             onChange={this.handleChange}
             placeholder="Liste des instructions"
             rows="15" />
+
+          <button type="submit">+ Ajouter une recette</button>
         </form>
       </div>
     );
