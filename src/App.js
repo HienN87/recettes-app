@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// CSS
 import './App.css'
 import Admin from './components/Admin'
 import Header from './components/Header'
@@ -37,6 +36,12 @@ class App extends Component {
     this.setState({ recettes })
   }
 
+  supprimerRecette = key => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = null
+    this.setState({ recettes })
+  }
+
   chargerExemple = () => {
     this.setState({ recettes })
   }
@@ -55,6 +60,7 @@ class App extends Component {
           recettes={this.state.recettes}
           ajouterRecette={this.ajouterRecette}
           majRecette={this.majRecette}
+          supprimerRecette={this.supprimerRecette}
           chargerExemple={this.chargerExemple} />
       </div>
     )
