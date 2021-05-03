@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './App.css'
 import Admin from './components/Admin'
 import Header from './components/Header'
@@ -32,6 +33,15 @@ const App = ({
         chargerExemple={chargerExemple} />
     </div>
   )
+}
+
+App.propTypes = {
+  match: PropTypes.object.isRequired,
+  recettes: PropTypes.object.isRequired,
+  ajouterRecette: PropTypes.func.isRequired,
+  majRecette: PropTypes.func.isRequired,
+  supprimerRecette: PropTypes.func.isRequired,
+  chargerExemple: PropTypes.func.isRequired
 }
 
 const WrappedComponent = withFirebase(App)
