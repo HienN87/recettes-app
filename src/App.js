@@ -5,6 +5,7 @@ import Admin from './components/Admin'
 import Header from './components/Header'
 import Card from './components/Card'
 import withFirebase from './hoc/withFirebase'
+import ColorContext from './components/Color'
 
 const App = ({
   match,
@@ -17,21 +18,23 @@ const App = ({
     .map(key => <Card key={key} details={recettes[key]} />)
 
   return (
-    <div className='box'>
-      <Header pseudo={match.params.pseudo} />
+    <ColorContext>
+      <div className='box'>
+        <Header pseudo={match.params.pseudo} />
 
-      <div className="cards">
-        {cards}
+        <div className="cards">
+          {cards}
+        </div>
+
+        <Admin
+          pseudo={match.params.pseudo}
+          recettes={recettes}
+          ajouterRecette={ajouterRecette}
+          majRecette={majRecette}
+          supprimerRecette={supprimerRecette}
+          chargerExemple={chargerExemple} />
       </div>
-
-      <Admin
-        pseudo={match.params.pseudo}
-        recettes={recettes}
-        ajouterRecette={ajouterRecette}
-        majRecette={majRecette}
-        supprimerRecette={supprimerRecette}
-        chargerExemple={chargerExemple} />
-    </div>
+    </ColorContext>
   )
 }
 
