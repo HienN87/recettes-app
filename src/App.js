@@ -1,71 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './App.css'
 import Admin from './components/Admin'
 import Header from './components/Header'
 import Card from './components/Card'
-import recettes from './recettes'
+import withFirebase from './hoc/withFirebase'
 
-import base from './base'
+const App = ({
+  match,
+  recettes,
+  ajouterRecette,
+  majRecette,
+  supprimerRecette,
+  chargerExemple }) => {
+  const cards = Object.keys(recettes)
+    .map(key => <Card key={key} details={recettes[key]} />)
 
-class App extends Component {
-  state = {
-    pseudo: this.props.match.params.pseudo,
-    recettes: {}
-  }
+  return (
+    <div className='box'>
+      <Header pseudo={match.params.pseudo} />
 
-  componentDidMount() {
-    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
-      context: this,
-      state: 'recettes'
-    })
-  }
-
-  componentWillUnmount() {
-    base.removeBinding(this.ref)
-  }
-
-  ajouterRecette = recette => {
-    const recettes = { ...this.state.recettes }
-    recettes[`recette-${Date.now()}`] = recette
-    this.setState({ recettes })
-  }
-
-  majRecette = (key, newRecette) => {
-    const recettes = { ...this.state.recettes }
-    recettes[key] = newRecette
-    this.setState({ recettes })
-  }
-
-  supprimerRecette = key => {
-    const recettes = { ...this.state.recettes }
-    recettes[key] = null
-    this.setState({ recettes })
-  }
-
-  chargerExemple = () => {
-    this.setState({ recettes })
-  }
-
-  render() {
-    const cards = Object.keys(this.state.recettes)
-      .map(key => <Card key={key} details={this.state.recettes[key]} />)
-
-    return (
-      <div className='box'>
-        <Header pseudo={this.state.pseudo} />
-
+      <div className="cards">
         {cards}
-
-        <Admin
-          pseudo={this.state.pseudo}
-          recettes={this.state.recettes}
-          ajouterRecette={this.ajouterRecette}
-          majRecette={this.majRecette}
-          supprimerRecette={this.supprimerRecette}
-          chargerExemple={this.chargerExemple} />
       </div>
-    )
-  }
+
+      <Admin
+        pseudo={match.params.pseudo}
+        recettes={recettes}
+        ajouterRecette={ajouterRecette}
+        majRecette={majRecette}
+        supprimerRecette={supprimerRecette}
+        chargerExemple={chargerExemple} />
+    </div>
+  )
 }
 
-export default App
+const WrappedComponent = withFirebase(App)
+
+export default WrappedComponent
